@@ -131,7 +131,10 @@ class _PageviewContentState extends State<PageviewContent> {
             )
           ],
         ),
-        Icon(Icons.format_list_bulleted)
+        Icon(
+          Icons.more_vert,
+          size: 20,
+        )
       ],
     );
   }

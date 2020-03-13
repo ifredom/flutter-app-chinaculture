@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage>
       children: <Widget>[
         Icon(Icons.search, size: 30),
         Gaps.hGap40,
-        Icon(Icons.dashboard, size: 30),
+        Icon(Icons.format_list_bulleted, size: 30),
       ],
     );
   }
