@@ -1,7 +1,8 @@
-import 'package:chinaculture/utils/common/colorUtils.dart';
 import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'child/pageview_content.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -54,7 +55,8 @@ class _HomePageState extends State<HomePage>
                 ),
               ],
             ),
-            Flexible(
+            Expanded(
+              flex: 1,
               child: _buildPageView(context),
             )
           ],
@@ -66,27 +68,18 @@ class _HomePageState extends State<HomePage>
   Widget _buildPageView(BuildContext context) {
     return TabBarView(
       controller: _tabController,
-      children: _tabs
-          .map((item) => Container(
-                color: Colors.blueGrey,
-                alignment: AlignmentDirectional.center,
-                child: Text(item),
-              ))
-          .toList(),
+      children: _tabs.map((item) => PageviewContent(item: item)).toList(),
     );
   }
 
   Widget _buildTabbar(BuildContext context) {
     return TabBar(
-      // indicatorColor: HexToColor("#1f5190"),
-      // indicator: new ShapeDecoration(
-      //   shape: new Border(
-      //     bottom: BorderSide(
-      //       width: 5.0,
-      //       color: HexToColor("#1f5190"),
-      //     ),
-      //   ),
-      // ),
+      controller: _tabController,
+      tabs: _tabs
+          .map((item) => Tab(
+                text: item,
+              ))
+          .toList(),
       unselectedLabelStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -96,13 +89,16 @@ class _HomePageState extends State<HomePage>
           fontWeight: FontWeight.bold,
           color: Theme.of(context).primaryColor),
       indicator: BoxDecoration(),
+      // indicatorColor: HexToColor("#1f5190"),
+      // indicator: new ShapeDecoration(
+      //   shape: new Border(
+      //     bottom: BorderSide(
+      //       width: 5.0,
+      //       color: HexToColor("#1f5190"),
+      //     ),
+      //   ),
+      // ),
       // indicatorSize: TabBarIndicatorSize.label,
-      controller: _tabController,
-      tabs: _tabs
-          .map((item) => Tab(
-                text: item,
-              ))
-          .toList(),
     );
   }
 

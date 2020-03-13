@@ -80,16 +80,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     Widget _frontWidget = this.frontWidget;
     if (null == _frontWidget && defaultLeft) {
       _frontWidget = this.backImageMode == BackImageMode.light
-          ? Image.asset(
-              "assets/image/custom/back.png",
-              fit: BoxFit.fitHeight,
-              height: this.preferredSize.height,
-            )
-          : Image.asset(
-              "assets/image/custom/back2.png",
-              fit: BoxFit.fitHeight,
-              height: this.preferredSize.height,
-            );
+          ? Icon(Icons.arrow_back)
+          : Icon(Icons.arrow_back_ios);
     }
 
     //数据处理
