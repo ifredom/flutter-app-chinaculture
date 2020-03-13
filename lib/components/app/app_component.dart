@@ -58,12 +58,12 @@ class AppComponent extends StatelessWidget {
 
     /// 统一主题风格
     ThemeData _theme = new ThemeData(
-      primaryColor: HexToColor('#f2f2f2'),
-      backgroundColor: HexToColor('#5A6275'),
+      primaryColor: HexToColor('#202427'), // 白色文字
+      backgroundColor: HexToColor("#202427"), // 黑色底a7a6ab
       textTheme: TextTheme(
         //设置Material的默认字体样式
         body1: TextStyle(
-          color: HexToColor("#f1f0f5"),
+          color: HexToColor("#202427"),
           fontSize: Dimens.gap_dp14,
           fontFamily: 'PingFang SC', // 默认字体设为: 14px
         ),

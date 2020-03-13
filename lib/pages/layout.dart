@@ -102,7 +102,7 @@ class _LayoutPageState extends State<LayoutPage>
       selectedItemColor:
           HexToColor("#0788f0") ?? Theme.of(context).primaryColor,
       unselectedItemColor: HexToColor("#5e5d65"),
-      backgroundColor: HexToColor("#25282f"),
+      backgroundColor: Theme.of(context).backgroundColor,
     );
   }
 }
