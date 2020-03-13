@@ -1,3 +1,4 @@
+import 'package:chinaculture/pages/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:chinaculture/pages/home/home.dart';
@@ -15,7 +16,7 @@ class AppComponent extends StatelessWidget {
   AppComponent({Key key}) : super(key: key);
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   final bool _isLoading = false;
-  final bool _hasLogin = false;
+  final bool _hasLogin = true;
 
   void initRoute() {
     final router = new Router();
@@ -31,7 +32,7 @@ class AppComponent extends StatelessWidget {
       print("是否登录:$_hasLogin");
       // 判断是否已经登录
       if (_hasLogin) {
-        return HomePage();
+        return LayoutPage();
       } else {
         // return Browser();
         return LoginPage();
@@ -57,7 +58,7 @@ class AppComponent extends StatelessWidget {
 
     /// 统一主题风格
     ThemeData _theme = new ThemeData(
-      primaryColor: HexToColor('#103580'),
+      primaryColor: HexToColor('#f2f2f2'),
       backgroundColor: HexToColor('#5A6275'),
       textTheme: TextTheme(
         //设置Material的默认字体样式

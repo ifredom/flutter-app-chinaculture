@@ -1,13 +1,14 @@
+import 'package:chinaculture/pages/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:chinaculture/pages/home/home.dart';
 import 'router_init.dart';
 import '404.dart';
-import 'package:chinaculture/routers/modules/homework_route.dart';
+import 'package:chinaculture/routers/modules/my_route.dart';
 
 class RoutesUtils {
   static Router router;
-  static const String defaultRouteName = '/';
+  static const String layoutPage = '/';
   static const String homePage = '/home';
   static const String webViewPage = "/webview";
   static const String audioPlayDemoPage = "/audioPlayDemo";
@@ -24,18 +25,18 @@ class RoutesUtils {
     });
 
     // 主界面可以在此类中进行注册（可定义传参）
-    router.define(homePage,
+    router.define(layoutPage,
         handler: Handler(
             handlerFunc:
                 (BuildContext context, Map<String, List<String>> params) =>
-                    HomePage()));
+                    LayoutPage()));
 
     // 参考：https://www.jianshu.com/p/1987cc9b714a
     // 每次初始化前 先清除集合 以免重复添加
     _listRouter.clear();
 
     /// 各个模块得路由，统一在此添加初始化
-    _listRouter.add(HomeworkRouter());
+    _listRouter.add(MyRouter());
 
     /// 初始化路由 循环遍历取出每个子router进行初始化操作
     _listRouter.forEach((routerProvider) {

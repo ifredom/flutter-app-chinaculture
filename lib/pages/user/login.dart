@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     print(userStore.isFetching);
 
     // 方式一：直接跳转
-    NavigatorUtils.push(context, RoutesUtils.homePage);
+    NavigatorUtils.push(context, RoutesUtils.layoutPage);
 
     // 方式二，请求接口后跳转
     // var res = await http.request(Api.SIGN_IN, params);
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     // if (res.data["code"] == 0) {
     //   UserInfo _userInfo = UserInfo.fromJson(res.data["data"]);
     //   Store.value<UserModel>(context).setInfo(_userInfo);
-    //   NavigatorUtils.push(context, RoutesUtils.homePage);
+    //   NavigatorUtils.push(context, RoutesUtils.layoutPage);
     // } else {
     //   showToast(res.data["msg"]);
     // }
