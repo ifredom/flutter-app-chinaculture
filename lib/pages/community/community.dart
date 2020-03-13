@@ -1,4 +1,3 @@
-import 'package:chinaculture/widgets/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class CommunityPage extends StatefulWidget {
@@ -7,16 +6,6 @@ class CommunityPage extends StatefulWidget {
 }
 
 class _CommunityPageState extends State<CommunityPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

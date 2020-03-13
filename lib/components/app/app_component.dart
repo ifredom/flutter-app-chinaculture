@@ -63,13 +63,13 @@ class AppComponent extends StatelessWidget {
       textTheme: TextTheme(
         //设置Material的默认字体样式
         body1: TextStyle(
-          color: Colors.black,
+          color: HexToColor("#f1f0f5"),
           fontSize: Dimens.gap_dp14,
           fontFamily: 'PingFang SC', // 默认字体设为: 14px
         ),
       ),
       iconTheme: IconThemeData(
-        color: Color(0xFFC91B3A),
+        color: HexToColor("a9a8ad"),
         size: Dimens.gap_dp15, // 图标默认尺寸，设置为: 14*14 px
       ),
     );

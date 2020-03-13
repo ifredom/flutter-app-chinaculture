@@ -1,4 +1,5 @@
 import 'package:chinaculture/pages/home/home.dart';
+import 'package:chinaculture/utils/common/ScreenUtil.dart';
 import 'package:chinaculture/utils/common/colorUtils.dart';
 import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,9 @@ class LayoutPage extends StatefulWidget {
 class _LayoutPageState extends State<LayoutPage>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
-  TabController _tabController; //需要定义一个Controller
   List<Widget> _list = List();
+  List<BottomNavigationBarItem> _bottomTabs = [];
+
   List tabData = [
     {'text': '首页', 'icon': Icon(Icons.home)},
     {'text': '社区', 'icon': Icon(Icons.group)},
@@ -34,8 +36,6 @@ class _LayoutPageState extends State<LayoutPage>
     {'text': '我的', 'icon': Icon(Icons.account_circle)},
   ];
 
-  List<BottomNavigationBarItem> _myTabs = [];
-
   void _itemTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -47,14 +47,16 @@ class _LayoutPageState extends State<LayoutPage>
     super.initState();
 
     for (int i = 0; i < tabData.length; i++) {
-      _myTabs.add(BottomNavigationBarItem(
-        icon: tabData[i]['icon'],
-        title: null == tabData[i]['text']
-            ? Gaps.empty
-            : Text(
-                tabData[i]['text'],
-              ),
-      ));
+      _bottomTabs.add(
+        BottomNavigationBarItem(
+          icon: tabData[i]['icon'],
+          title: null == tabData[i]['text']
+              ? Gaps.empty
+              : Text(
+                  tabData[i]['text'],
+                ),
+        ),
+      );
     }
 
     _list
@@ -72,16 +74,19 @@ class _LayoutPageState extends State<LayoutPage>
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
-    print('screenWidth：$screenWidth , screenWidth:$screenHeight');
+    /// 初始化屏幕适配.必须放在第一个页面
+    ScreenUtil.instance =
+        ScreenUtil(designDraftWidth: 1920, designDrafHeight: 1080)
+          ..init(context);
 
     return SafeArea(
       child: Scaffold(
+        // indexedStack 不带动画
         body: IndexedStack(
           index: _currentIndex,
           children: _list,
         ),
+        // body: HomePage(),
         bottomNavigationBar: _buildBottomAppBar(),
       ),
     );
@@ -89,12 +94,13 @@ class _LayoutPageState extends State<LayoutPage>
 
   Widget _buildBottomAppBar() {
     return BottomNavigationBar(
-      items: _myTabs,
+      items: _bottomTabs,
       currentIndex: _currentIndex,
       onTap: _itemTapped,
       // 可选值： fixed 固定 ，shifting 按钮点击移动效果
       type: BottomNavigationBarType.fixed,
-      fixedColor: HexToColor("#0788f0") ?? Theme.of(context).primaryColor,
+      selectedItemColor:
+          HexToColor("#0788f0") ?? Theme.of(context).primaryColor,
       unselectedItemColor: HexToColor("#5e5d65"),
       backgroundColor: HexToColor("#25282f"),
     );

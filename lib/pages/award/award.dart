@@ -1,4 +1,3 @@
-import 'package:chinaculture/widgets/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class AwardPage extends StatefulWidget {
