@@ -1,3 +1,4 @@
+import 'package:chinaculture/pages/home/child/user_data.dart';
 import 'package:chinaculture/utils/common/colorUtils.dart';
 import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/material.dart';
@@ -5,32 +6,19 @@ import 'package:chinaculture/widgets/list/list_refresh.dart' as listRefreshCom;
 
 import 'commonBottomSheet.dart';
 
-class PageviewContent extends StatefulWidget {
+// 附近动态
+class DynamicPageView extends StatefulWidget {
   final item;
-  PageviewContent({this.item});
+  DynamicPageView({this.item});
   @override
-  _PageviewContentState createState() => _PageviewContentState();
+  _DynamicPageViewState createState() => _DynamicPageViewState();
 }
 
-class _PageviewContentState extends State<PageviewContent> {
+class _DynamicPageViewState extends State<DynamicPageView> {
   Map _result;
   Future<Map> getIndexListData([Map<String, dynamic> params]) async {
     Map<String, dynamic> result = {
-      "list": [
-        {"name": "小黄", "sex": 25},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小黑", "sex": 99},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-        {"name": "小红", "sex": 18},
-      ],
+      "list": mockUserData,
       'total': 13,
       'pageIndex': 2
     };
@@ -65,14 +53,14 @@ class _PageviewContentState extends State<PageviewContent> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _buildCardTop(),
-          _buildCardMiddle(),
+          _buildCardTop(item),
+          _buildCardMiddle(item),
         ],
       ),
     );
   }
 
-  Widget _buildCardTop() {
+  Widget _buildCardTop(Map item) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +69,7 @@ class _PageviewContentState extends State<PageviewContent> {
           children: <Widget>[
             ClipOval(
                 child: Image.asset(
-              "assets/ifredom.jpg",
+              item["portrait"],
               height: 32,
               width: 32,
             )),
@@ -90,7 +78,7 @@ class _PageviewContentState extends State<PageviewContent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "是琪琪呀",
+                  item["name"],
                   style: TextStyle(color: Colors.blueAccent),
                 ),
                 Gaps.vGap5,
@@ -103,11 +91,15 @@ class _PageviewContentState extends State<PageviewContent> {
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Row(
                         children: <Widget>[
-                          Icon(Icons.pregnant_woman, size: 12),
+                          Icon(
+                            Icons.pregnant_woman,
+                            size: 12,
+                            color: Colors.white,
+                          ),
                           Gaps.hGap10,
-                          Text("18",
+                          Text(item["age"].toString(),
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 12)),
+                                  TextStyle(color: Colors.white, fontSize: 10)),
                         ],
                       ),
                     ),
@@ -119,11 +111,15 @@ class _PageviewContentState extends State<PageviewContent> {
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Row(
                         children: <Widget>[
-                          Icon(Icons.star, size: 12),
+                          Icon(
+                            Icons.star,
+                            size: 12,
+                            color: Colors.orangeAccent,
+                          ),
                           Gaps.hGap10,
-                          Text("65",
+                          Text(item["anchorLevel"],
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 12)),
+                                  TextStyle(color: Colors.white, fontSize: 10)),
                         ],
                       ),
                     )
@@ -159,7 +155,7 @@ class _PageviewContentState extends State<PageviewContent> {
     );
   }
 
-  Widget _buildCardMiddle() {
+  Widget _buildCardMiddle(Map item) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(top: 10),

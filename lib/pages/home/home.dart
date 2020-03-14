@@ -1,9 +1,11 @@
+import 'package:chinaculture/utils/common/colorUtils.dart';
 import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'child/commonBottomSheet.dart';
-import 'child/pageview_content.dart';
+import 'child/dynamic_pageview.dart';
+import 'child/nearby_person_pageview.dart';
+import 'child/samecity_pageview.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,8 +17,7 @@ class _HomePageState extends State<HomePage>
   List _tabs = <String>['附近动态', '附近的人', '同城'];
   TabController _tabController;
   // 页面控制器初始化
-  double _currentPage = 0.0;
-  PageController _pageController = PageController(initialPage: 0);
+  int _currentPageIndex = 0;
 
   @override
   void initState() {
@@ -47,13 +48,13 @@ class _HomePageState extends State<HomePage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
-                  flex: 5,
+                  flex: 7,
                   child: _buildTabbar(context),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: _buildFixedTools(),
+                Spacer(
+                  flex: 1,
                 ),
+                _buildFixedTools(),
               ],
             ),
             Expanded(
@@ -69,7 +70,11 @@ class _HomePageState extends State<HomePage>
   Widget _buildPageView(BuildContext context) {
     return TabBarView(
       controller: _tabController,
-      children: _tabs.map((item) => PageviewContent(item: item)).toList(),
+      children: <Widget>[
+        DynamicPageView(),
+        NearbyPersonPageView(),
+        SamecityPageView(),
+      ],
     );
   }
 
@@ -91,6 +96,12 @@ class _HomePageState extends State<HomePage>
           fontWeight: FontWeight.bold,
           color: Theme.of(context).primaryColor),
       indicator: BoxDecoration(),
+      onTap: (index) {
+        print(index);
+        setState(() {
+          _currentPageIndex = index;
+        });
+      },
       // indicatorColor: HexToColor("#1f5190"),
       // indicator: new ShapeDecoration(
       //   shape: new Border(
@@ -105,17 +116,56 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildFixedTools() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Icon(Icons.search, size: 24),
-        Gaps.hGap40,
-        GestureDetector(
-          child: Icon(Icons.format_list_bulleted, size: 24),
-          onTap: () {},
-        ),
-      ],
+    print(_currentPageIndex);
+    print(_tabController.index);
+
+    Widget _dynamicButton = Container(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      decoration: BoxDecoration(
+          color: HexToColor("#33d4ff"),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          )),
+      child: Text(
+        "发动态",
+        style: TextStyle(color: Colors.white),
+      ),
     );
+
+    Widget _screenButton = GestureDetector(
+      child: Container(
+        child: Icon(Icons.directions_subway, size: 24),
+      ),
+      onTap: () {},
+    );
+
+    Widget _roomButton = Container(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      decoration: BoxDecoration(
+          color: HexToColor("#15e2c1"),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          )),
+      child: Text(
+        "建房间",
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+
+    Widget result = _dynamicButton;
+    switch (_tabController.index) {
+      case 0:
+        result = _dynamicButton;
+        break;
+      case 1:
+        result = _screenButton;
+        break;
+      case 2:
+        result = _roomButton;
+        break;
+      default:
+        break;
+    }
+    return result;
   }
 }
