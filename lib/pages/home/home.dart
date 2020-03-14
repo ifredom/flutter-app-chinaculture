@@ -2,6 +2,7 @@ import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'child/commonBottomSheet.dart';
 import 'child/pageview_content.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,18 +75,19 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildTabbar(BuildContext context) {
     return TabBar(
+      labelPadding: EdgeInsets.zero,
       controller: _tabController,
       tabs: _tabs
           .map((item) => Tab(
-                text: item,
+                child: Text(item, softWrap: false, overflow: TextOverflow.fade),
               ))
           .toList(),
       unselectedLabelStyle: TextStyle(
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.bold,
           color: Theme.of(context).primaryColor),
       labelStyle: TextStyle(
-          fontSize: 24,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Theme.of(context).primaryColor),
       indicator: BoxDecoration(),
@@ -107,9 +109,12 @@ class _HomePageState extends State<HomePage>
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Icon(Icons.search, size: 30),
+        Icon(Icons.search, size: 24),
         Gaps.hGap40,
-        Icon(Icons.format_list_bulleted, size: 30),
+        GestureDetector(
+          child: Icon(Icons.format_list_bulleted, size: 24),
+          onTap: () {},
+        ),
       ],
     );
   }

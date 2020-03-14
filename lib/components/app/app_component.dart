@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:chinaculture/pages/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:chinaculture/pages/home/home.dart';
+import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:chinaculture/pages/user/login.dart';
 import 'package:chinaculture/utils/res/dimens.dart';
@@ -58,19 +61,22 @@ class AppComponent extends StatelessWidget {
 
     /// 统一主题风格
     ThemeData _theme = new ThemeData(
-      primaryColor: HexToColor('#202427'), // 白色文字
-      backgroundColor: HexToColor("#202427"), // 黑色底
+      // brightness: Brightness.dark,
+      primaryColor: HexToColor('#ffffff'), // 基准色值
+      accentColor: HexToColor('#F0F8FF'), // 强调色值
+      backgroundColor: HexToColor("#ffffff"), // 黑色背景
       textTheme: TextTheme(
         //设置Material的默认字体样式
         body1: TextStyle(
-          color: HexToColor("#a8a7ac"),
+          color: HexToColor("#333333"),
           fontSize: Dimens.gap_dp14,
+          fontWeight: FontWeight.normal,
           fontFamily: 'PingFang SC', // 默认字体设为: 14px
         ),
       ),
       iconTheme: IconThemeData(
-        color: HexToColor("a9a8ad"),
-        size: Dimens.gap_dp15, // 图标默认尺寸，设置为: 14*14 px
+        color: HexToColor("#a9a8ad"),
+        size: Dimens.gap_dp14, // 图标默认尺寸，设置为: 14*14 px
       ),
     );
 

@@ -3,6 +3,8 @@ import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:chinaculture/widgets/list/list_refresh.dart' as listRefreshCom;
 
+import 'commonBottomSheet.dart';
+
 class PageviewContent extends StatefulWidget {
   final item;
   PageviewContent({this.item});
@@ -131,10 +133,28 @@ class _PageviewContentState extends State<PageviewContent> {
             )
           ],
         ),
-        Icon(
-          Icons.more_vert,
-          size: 20,
-        )
+        GestureDetector(
+            child: Icon(
+              Icons.more_vert,
+              size: 20,
+            ),
+            onTap: () {
+              showDialog(
+                  barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
+                  context: context,
+                  builder: (BuildContext context) {
+                    var list = List();
+                    list.add('相册');
+                    list.add('相机');
+                    list.add('保存图片');
+                    return CommonBottomSheet(
+                      list: list,
+                      onItemClickListener: (index) async {
+                        Navigator.pop(context);
+                      },
+                    );
+                  });
+            })
       ],
     );
   }
