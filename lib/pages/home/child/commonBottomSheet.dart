@@ -1,5 +1,6 @@
 import 'package:chinaculture/routers/navigator_utils.dart';
 import 'package:chinaculture/utils/common/colorUtils.dart';
+import 'package:chinaculture/utils/common/fonts_utils.dart';
 import 'package:chinaculture/utils/res/gaps.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class _CommonBottomSheetState extends State<CommonBottomSheet> {
   double itemHeight = 44;
   var borderColor = Colors.white;
   double _circular = 10;
-  final Color _lineColor = Color.fromRGBO(211, 211, 211, 0.5);
+  final Color _lineColor = Color.fromRGBO(211, 211, 211, 0.2);
   ScrollController _scrollController = new ScrollController();
 
   @override
@@ -127,47 +128,96 @@ class _CommonBottomSheetState extends State<CommonBottomSheet> {
 
   Widget _buildTargetUser() {
     Size screenSize = MediaQuery.of(context).size;
+
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: 10,
+      itemCount: 8,
       itemBuilder: (context, index) {
         return Container(
           width: screenSize.width * 0.2,
           height: screenSize.width * 0.2,
           margin: EdgeInsets.only(right: 5),
           padding: EdgeInsets.only(left: 8, right: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: Image.asset(
-                  "assets/ifredom.jpg",
-                  fit: BoxFit.cover,
-                  height: 40,
-                  width: 40,
-                ),
-              ),
-              Gaps.vGap10,
-              Text(
-                "雷布斯V5872",
-                softWrap: false,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                ),
-              )
-            ],
-          ),
+          child: _buildTargetUserItem(index),
         );
       },
       controller: _scrollController,
+    );
+  }
+
+  Widget _buildTargetUserItem(int index) {
+    Map _itemData = Map();
+
+    switch (index) {
+      case 0:
+        _itemData["icon"] = "assets/image/ador/ador0.jpg";
+        _itemData["name"] = "倾城";
+
+        break;
+      case 1:
+        _itemData["icon"] = "assets/image/ador/ador1.jpg";
+        _itemData["name"] = "陌爱";
+
+        break;
+      case 2:
+        _itemData["icon"] = "assets/image/ador/ador2.jpg";
+        _itemData["name"] = "黑寡妇👄";
+
+        break;
+      case 3:
+        _itemData["icon"] = "assets/image/ador/ador3.jpg";
+        _itemData["name"] = "👑爱无能";
+        break;
+      case 4:
+        _itemData["icon"] = "assets/image/ador/ador4.jpg";
+        _itemData["name"] = "......小耳朵..";
+        break;
+      case 5:
+        _itemData["icon"] = "assets/image/ador/ador5.jpg";
+        _itemData["name"] = "OVER AGAIN";
+        break;
+      case 6:
+        _itemData["icon"] = "assets/image/ador/ador6.jpg";
+        _itemData["name"] = "落幕🍀";
+        break;
+      case 7:
+        _itemData["icon"] = "assets/image/ador/ador7.jpg";
+        _itemData["name"] = "不负遇见💕遇见你";
+        break;
+      default:
+        break;
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: ClipOval(
+            child: Image.asset(
+              _itemData["icon"],
+              fit: BoxFit.cover,
+              height: 40,
+              width: 40,
+            ),
+          ),
+        ),
+        Gaps.vGap10,
+        Text(
+          _itemData["name"],
+          softWrap: false,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            decoration: TextDecoration.none,
+            color: Colors.black,
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+          ),
+        )
+      ],
     );
   }
 
@@ -175,43 +225,88 @@ class _CommonBottomSheetState extends State<CommonBottomSheet> {
     Size screenSize = MediaQuery.of(context).size;
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: 10,
+      itemCount: 6,
       itemBuilder: (context, index) {
         return Container(
           width: screenSize.width * 0.2,
           height: screenSize.width * 0.2,
           margin: EdgeInsets.only(right: 5),
           padding: EdgeInsets.only(left: 8, right: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: Image.asset(
-                  "assets/image/custom/wechat.png",
-                  height: 40,
-                  width: 40,
-                ),
-              ),
-              Gaps.vGap10,
-              Text(
-                "微信好友",
-                softWrap: false,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                ),
-              )
-            ],
-          ),
+          child: _buildThirtPartItem(index),
         );
       },
       controller: _scrollController,
+    );
+  }
+
+  Widget _buildThirtPartItem(int index) {
+    Map _itemData = Map();
+
+    switch (index) {
+      case 0:
+        _itemData["iconData"] = FontsUtils.wechat;
+        _itemData["color"] = HexToColor("#46c725");
+        _itemData["text"] = "微信";
+
+        break;
+      case 1:
+        _itemData["iconData"] = FontsUtils.weibo;
+        _itemData["color"] = Colors.redAccent;
+        _itemData["text"] = "微博";
+
+        break;
+      case 2:
+        _itemData["iconData"] = FontsUtils.alipay;
+        _itemData["color"] = HexToColor("#36adfd");
+        _itemData["text"] = "支付宝";
+
+        break;
+      case 3:
+        _itemData["iconData"] = FontsUtils.pengyouquan;
+        _itemData["color"] = Colors.greenAccent;
+        _itemData["text"] = "朋友圈";
+        break;
+      case 4:
+        _itemData["iconData"] = FontsUtils.qqzone;
+        _itemData["color"] = HexToColor("#fbc235");
+        _itemData["text"] = "QQ空间";
+        break;
+      case 5:
+        _itemData["iconData"] = FontsUtils.momo;
+        _itemData["color"] = Colors.pink[100];
+        _itemData["text"] = "陌陌";
+        break;
+      default:
+        break;
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          child: Icon(
+            _itemData["iconData"],
+            size: 32,
+            color: _itemData["color"],
+          ),
+        ),
+        Gaps.vGap10,
+        Text(
+          _itemData["text"],
+          softWrap: false,
+          overflow: TextOverflow.fade,
+          style: TextStyle(
+            decoration: TextDecoration.none, // 文本下横线 双横线
+            color: Colors.black,
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+          ),
+        )
+      ],
     );
   }
 }
