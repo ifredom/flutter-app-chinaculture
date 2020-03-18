@@ -62,13 +62,13 @@ class AppComponent extends StatelessWidget {
     /// 统一主题风格
     ThemeData _theme = new ThemeData(
       // brightness: Brightness.dark,
-      primaryColor: HexToColor('#ffffff'), // 基准色值
-      accentColor: HexToColor('#F0F8FF'), // 强调色值
-      backgroundColor: HexToColor("#ffffff"), // 黑色背景
+      // primaryColor: HexToColor('#ffffff'), // 基准色值
+      // accentColor: HexToColor('#F0F8FF'), // 强调色值
+      // backgroundColor: HexToColor("#ffffff"), // 黑色背景
       textTheme: TextTheme(
         //设置Material的默认字体样式
         body1: TextStyle(
-          color: HexToColor("#333333"),
+          // color: HexToColor("#333333"),
           fontSize: Dimens.gap_dp14,
           fontWeight: FontWeight.normal,
           fontFamily: 'PingFang SC', // 默认字体设为: 14px

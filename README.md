@@ -1,5 +1,7 @@
 # chinaculture
 
+酷，cool。
+
 一个完整得flutter项目模板
 
 * `api` http(接口请求)封装

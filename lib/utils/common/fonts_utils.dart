@@ -25,4 +25,17 @@ class FontsUtils {
   // 不喜欢图标
   static const IconData unlike =
       const IconData(0xe654, fontFamily: 'myIcons', matchTextDirection: true);
+
+  // vip
+  static const IconData vip =
+      const IconData(0xe627, fontFamily: 'myIcons', matchTextDirection: true);
+  // 喇叭
+  static const IconData horn =
+      const IconData(0xe68d, fontFamily: 'myIcons', matchTextDirection: true);
+  // 眼镜
+  static const IconData glasses =
+      const IconData(0xe607, fontFamily: 'myIcons', matchTextDirection: true);
+  // 钱包
+  static const IconData wallet =
+      const IconData(0xe673, fontFamily: 'myIcons', matchTextDirection: true);
 }
