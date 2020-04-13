@@ -10,7 +10,7 @@ class _CommunityPageState extends State<CommunityPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Container(
+          body: Center(
         child: Text("社区"),
       )),
     );

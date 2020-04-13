@@ -105,7 +105,7 @@ class _LayoutPageState extends State<LayoutPage>
           index: _currentIndex,
           children: _list,
         ),
-        bottomNavigationBar: _buildTaNav(),
+        bottomNavigationBar: bottomNav(),
       ),
     );
   }
@@ -117,10 +117,10 @@ class _LayoutPageState extends State<LayoutPage>
       onTap: _itemTapped,
       // 可选值： fixed 固定 ，shifting 按钮点击移动效果
       type: BottomNavigationBarType.shifting,
-      // selectedItemColor:
-      //     HexToColor("#0788f0") ?? Theme.of(context).primaryColor,
-      // unselectedItemColor: HexToColor("#5e5d65"),
-      // backgroundColor: Theme.of(context).backgroundColor,
+      selectedItemColor:
+          HexToColor("#0788f0") ?? Theme.of(context).primaryColor,
+      unselectedItemColor: HexToColor("#5e5d65"),
+      backgroundColor: Theme.of(context).backgroundColor,
     );
   }
 

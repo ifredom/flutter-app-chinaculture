@@ -20,8 +20,8 @@ class _AwardPageState extends State<AwardPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Container(
-        child: Text("哇白"),
+          body: Center(
+        child: Text("专栏专栏专栏专栏"),
       )),
     );
   }
