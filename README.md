@@ -1,8 +1,8 @@
 # chinaculture
 
-酷，cool。
+时光匣。
 
-一个完整得flutter项目模板
+## Project structure(项目特性))
 
 * `api` http(接口请求)封装
 * `routers` fluro(路由)封装
