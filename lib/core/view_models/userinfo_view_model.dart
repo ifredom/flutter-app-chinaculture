@@ -73,7 +73,6 @@ class UserinfoViewModel extends BaseViewModel with Validators {
     LocalStorage.set(LocalStorageKeys.TOKEN_KEY, userInfo.token);
     LocalStorage.set(LocalStorageKeys.HAS_LOGIN, true);
 
-    // _user = userInfo;
     _authService.updateCurrentUser(userInfo);
     notifyListeners();
   }
@@ -83,32 +82,8 @@ class UserinfoViewModel extends BaseViewModel with Validators {
     notifyListeners();
   }
 
-  /// https://stackoom.com/question/3UKD6/%E4%BB%80%E4%B9%88%E6%98%AFbuilt-value%E5%AF%B9%E8%B1%A1%E7%9A%84setter
-  setSex(int gender) {
-    /// 写法二
-    // p = (p.toBuilder().type = 'hello world').build();
-    /// 写法一
-    _authService.updateUserSex(gender);
-    setState(ViewState.Success);
-  }
-
   setNickname(String nickName) {
     _authService.updateUserNiceName(nickName);
-    notifyListeners();
-  }
-
-  setAddress(String detailAddress) {
-    _authService.updateUserAddress(detailAddress);
-    notifyListeners();
-  }
-
-  setDescription(String description) {
-    _authService.updateUserDescription(description);
-    notifyListeners();
-  }
-
-  setFirstTeachingDate(String year) {
-    _authService.updateUserfirstTeachingDate(year);
     notifyListeners();
   }
 }

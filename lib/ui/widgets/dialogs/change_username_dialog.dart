@@ -65,8 +65,6 @@ class _ChangeUsernameDialogState extends State<ChangeUsernameDialog> {
           children: <Widget>[
             InputField(
               focusNode: _usernameFocus,
-              autofocus: false,
-              roundBox: true,
               hintText: "输入昵称",
               keyboardType: TextInputType.phone,
               controller: usernameController,

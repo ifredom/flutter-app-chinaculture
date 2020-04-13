@@ -32,6 +32,7 @@ class AuthServiceImpl implements AuthService {
     String password,
   ) async {
     try {
+      await Future.delayed(Duration(milliseconds: 2000));
       return await httpUtil.request(ApiCode.SIGN_IN, {
         "mobile": mobile,
         "pwd": password,
@@ -133,44 +134,11 @@ class AuthServiceImpl implements AuthService {
   // https://stackoom.com/question/3UKD6/%E4%BB%80%E4%B9%88%E6%98%AFbuilt-value%E5%AF%B9%E8%B1%A1%E7%9A%84setter
   // 更新用户类型
   @override
-  Future<void> updateUserType(String userType) async {
+  Future<void> updateUserNiceName(String nickName) async {
     // 写法二
     // p = (p.toBuilder().type = 'hello world').build();
     // 写法一
-    _currentUser = _currentUser.rebuild((u) => u..userType = userType);
-
-    _userType = userType;
-  }
-
-  @override
-  Future<void> updateUserInvitationCode(String invitationCode) async {
-    _invitationCode = invitationCode;
-  }
-
-  @override
-  Future<void> updateUserNiceName(String nickName) async {
     _currentUser = _currentUser.rebuild((u) => u..nickName = nickName);
-  }
-
-  @override
-  Future<void> updateUserAddress(String detailAddress) async {
-    _currentUser =
-        _currentUser.rebuild((u) => u..detailAddress = detailAddress);
-  }
-
-  @override
-  Future<void> updateUserDescription(String description) async {
-    _currentUser = _currentUser.rebuild((u) => u..description = description);
-  }
-
-  @override
-  Future<void> updateUserfirstTeachingDate(String year) async {
-    _currentUser = _currentUser.rebuild((u) => u..firstTeachingDate = year);
-  }
-
-  @override
-  Future<void> updateUserSex(int sex) async {
-    _currentUser = _currentUser.rebuild((u) => u..gender = sex);
   }
 
   @override
@@ -184,6 +152,6 @@ class AuthServiceImpl implements AuthService {
   Future<bool> isUserLoggedIn() async {
     // await Future.delayed(Duration(milliseconds: 3000));
     String token = await LocalStorage.get(LocalStorageKeys.TOKEN_KEY);
-    return token != null;
+    return false;
   }
 }

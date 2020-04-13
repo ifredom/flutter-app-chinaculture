@@ -15,16 +15,7 @@ class StartUpViewModel extends BaseViewModel {
     final hasLoggedInUser = await _authService.isUserLoggedIn();
 
     if (hasLoggedInUser) {
-      String id = await LocalStorage.get(LocalStorageKeys.USER_ID);
-      var res = await _authService.fetchUserInfo(id);
-      if (res.data["code"] == 0) {
-        User userinfo = User.fromMap(res.data["data"]);
-        if (userinfo.userType == "T") {
-          _navigationService.pushReplacementNamed(RoutesUtils.teacherHomePage);
-        } else {
-          _navigationService.pushReplacementNamed(RoutesUtils.homePage);
-        }
-      }
+      _navigationService.pushReplacementNamed(RoutesUtils.homePage);
     } else {
       _navigationService.pushReplacementNamed(RoutesUtils.loginPage);
     }

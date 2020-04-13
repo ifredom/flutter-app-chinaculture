@@ -1,13 +1,13 @@
+import 'package:chinaculture/core/utils/res/resources.dart';
+import 'package:chinaculture/core/utils/res/ui_helper.dart';
+import 'package:chinaculture/core/view_models/login_view_model.dart';
+import 'package:chinaculture/ui/widgets/buttons/gradient_button.dart';
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:chinaculture/api/api.dart';
-import 'package:chinaculture/api/http.dart';
-import 'package:chinaculture/core/routes/navigator_utils.dart';
-import 'package:chinaculture/core/routes/routers.dart';
 import 'package:chinaculture/core/utils/common/ScreenUtil.dart';
 import 'package:chinaculture/core/utils/common/color_utils.dart';
 import 'package:chinaculture/core/utils/res/gaps.dart';
 import 'package:chinaculture/ui/widgets/textfield/text_field.dart';
+import 'package:provider_architecture/viewmodel_provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,172 +15,178 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
   FocusNode _phoneFocus = FocusNode();
   FocusNode _pwdFocus = FocusNode();
   final TextEditingController phoneController = new TextEditingController();
   final TextEditingController pwdController = new TextEditingController();
-  String _userPhone = '';
-  String _userPwd = '';
-
-  void _tappedLogin() async {
-    var params = Map<String, String>();
-    params["mobile"] = _userPhone;
-    params["pwd"] = _userPwd;
-
-    // var userStore = Store.value<UserModel>(context);
-    // print(userStore.isFetching);
-
-    // 方式一：直接跳转
-    // NavigatorUtils.push(context, RoutesUtils.layoutPage);
-
-    // 方式二，请求接口后跳转
-    // var res = await http.request(Api.SIGN_IN, params);
-
-    // if (res.data["code"] == 0) {
-    //   UserInfo _userInfo = UserInfo.fromJson(res.data["data"]);
-    //   Store.value<UserModel>(context).setInfo(_userInfo);
-    //   NavigatorUtils.push(context, RoutesUtils.layoutPage);
-    // } else {
-    //   showToast(res.data["msg"]);
-    // }
-  }
 
   @override
   void dispose() {
+    phoneController.dispose();
+    pwdController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.638,
-            constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.6783333),
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Color.fromRGBO(255, 215, 0, 0.4),
-                width: 5,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildTitle(title: "Login"),
-                Gaps.vGap40,
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setSp(70)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        InputField(
-                          focusNode: _phoneFocus,
-                          autofocus: false,
-                          roundBox: true,
-                          hintText: "input phone number",
-                          keyboardType: TextInputType.phone,
-                          controller: phoneController,
-                          borderColor: HexToColor("#CBAEFA"),
-                          onChanged: (String value) {
-                            _userPhone = value;
-                          },
-                        ),
-                        Gaps.vGap20,
-                        InputField(
-                          focusNode: _pwdFocus,
-                          autofocus: false,
-                          roundBox: true,
-                          obscureText: true,
-                          hintText: "input password",
-                          controller: pwdController,
-                          borderColor: HexToColor("#CBAEFA"),
-                          onChanged: (String value) {
-                            _userPwd = value;
-                          },
-                        ),
-                        Gaps.vGap20,
-                        Center(
-                          child: buildLoginButton(),
-                        ),
-                        Gaps.vGap30,
-                        Center(
-                          child: GestureDetector(
-                            child: Text(
-                              "phone code login",
-                              style: TextStyle(
-                                color: HexToColor("#5324B3"),
-                                fontSize: ScreenUtil().setSp(30),
+    return ViewModelProvider<LoginViewModel>.withConsumer(
+      viewModel: LoginViewModel(),
+      builder: (context, model, child) => GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomPadding: false,
+            body: Form(
+              key: formKey,
+              child: IgnorePointer(
+                ignoring: model.busy,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Gaps.vGap50,
+                      BuildLogo(),
+                      InputField(
+                        focusNode: _phoneFocus,
+                        autofocus: false,
+                        hintText: "手机号码",
+                        keyboardType: TextInputType.phone,
+                        controller: phoneController,
+                        borderColor: HexToColor("#CBAEFA"),
+                      ),
+                      Gaps.vGap20,
+                      InputField(
+                        focusNode: _pwdFocus,
+                        autofocus: false,
+                        obscureText: true,
+                        hintText: "密码",
+                        controller: pwdController,
+                        borderColor: HexToColor("#CBAEFA"),
+                      ),
+                      Gaps.vGap40,
+                      BuildLoginButton(
+                        busy: model.busy,
+                        onPressed: () {
+                          if (!formKey.currentState.validate()) return;
+                          model.loginWithPassword(
+                            phoneController.text,
+                            pwdController.text,
+                          );
+                        },
+                      ),
+                      Gaps.vGap40,
+                      Center(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            GestureDetector(
+                              child: Text(
+                                "注册",
+                                style: TextStyle(
+                                  color: HexToColor("#5324B3"),
+                                  fontSize: 14,
+                                ),
                               ),
+                              onTap: () {},
                             ),
-                            onTap: () {
-                              // NavigatorUtils.push(
-                              //     context, UserRouter.loginPhonePage);
-                            },
-                          ),
+                            GestureDetector(
+                              child: Text(
+                                "验证码登录",
+                                style: TextStyle(
+                                  color: HexToColor("#5324B3"),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ],
                         ),
-                        Gaps.vGap40,
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget buildLoginButton() {
-    return Container(
-      width: 100,
-      height: 32,
-      decoration: new BoxDecoration(
-        //背景
-        color: HexToColor('#A061FD'),
-        //设置四周圆角 角度 这里的角度应该为 父Container height 的一半
-        borderRadius: BorderRadius.all(Radius.circular(43.0)),
-      ),
-      child: new FlatButton(
-        child: new Text(
-          'Login',
-          style: new TextStyle(fontSize: 15, color: HexToColor('#ffffff')),
+class BuildLogo extends StatelessWidget {
+  final Function onPressed;
+  const BuildLogo({
+    Key key,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ClipOval(
+          child: Image.asset(
+            'assets/ifredom.jpg',
+            fit: BoxFit.contain,
+            width: 80,
+          ),
         ),
-        onPressed: _tappedLogin,
-      ),
+        Gaps.vGap30,
+        Text(
+          "轻 · 音",
+          style: TextStyle(fontSize: 22),
+        ),
+        Gaps.vGap15,
+        SizedBox(
+          height: 1,
+          width: 40,
+          child: DecoratedBox(
+              decoration: BoxDecoration(color: HexToColor("#88ada6"))),
+        ),
+        Gaps.vGap8,
+        Text(
+          "每个人都是声音的艺术家",
+          style: TextStyle(fontSize: 12, letterSpacing: 4),
+        ),
+        Gaps.vGap8,
+        SizedBox(
+          height: 1,
+          width: 40,
+          child: DecoratedBox(
+              decoration: BoxDecoration(color: HexToColor("#88ada6"))),
+        ),
+        Gaps.vGap40,
+      ],
     );
   }
+}
 
-  Widget _buildTitle({String title}) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: ScreenUtil().setHeight(20),
-          horizontal: ScreenUtil().setWidth(50)),
-      decoration: new BoxDecoration(
-        color: HexToColor('#7B68EE'),
-        border: Border.all(color: Colors.transparent, width: 0.5), // 边色与边宽度
-        borderRadius: BorderRadius.vertical(top: Radius.elliptical(16, 16)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Gaps.empty,
-          Text(
-            title,
-            style: TextStyle(
-                color: HexToColor('#5324B3'), fontWeight: FontWeight.bold),
-          ),
-        ],
+class BuildLoginButton extends StatelessWidget {
+  final bool busy;
+  final Function onPressed;
+  const BuildLoginButton({
+    Key key,
+    this.busy,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: GradientButton(
+        loading: busy,
+        text: '登录',
+        onPressed: onPressed,
       ),
     );
   }

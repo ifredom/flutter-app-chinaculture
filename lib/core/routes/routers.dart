@@ -1,3 +1,4 @@
+import 'package:chinaculture/ui/pages/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -11,36 +12,10 @@ import 'package:chinaculture/ui/pages/user/login_phone.dart';
 
 class RoutesUtils {
   static Router router;
-  static const String homePage = 'app://';
-  static const String teacherHomePage = 'app://teacherHomePage';
-  static const String webViewPage = "app://webview";
-  static const String audioPlayDemoPage = "app://audioPlayDemo";
-
-  static const String formPasswordPage = "app://formPasswordPage";
-  static const String formAlipayPage = "app://formAlipayPage";
-
-  static const String formWithdrawalPage = "app://formWithdrawalPage";
-  static const String formWithdrawalSucessPage =
-      "app://formWithdrawalSucessPage";
-  static const String formRenewalPage = "app://formRenewalPage";
+  static const String rootPage = 'app://';
+  static const String homePage = 'app://homePage';
   static const String loginPage = "app://loginPage";
   static const String loginPhonePage = "app://loginPhonePage";
-
-  static const String activesIntroPage = "app://activesIntroPage";
-  static const String playMusicPage = "app://playMusicPage";
-
-  static const String freemodePage = "app://freemodePage";
-  static const String freemodeBooklistPage = "app://freemodeBooklistPage";
-
-  static const String homeworkIndexPage = "app://homeworkIndexPage";
-  static const String homeworkDetailPage = "app://homeworkDetailPage";
-
-  static const String completematerialPage =
-      "app://completematerialPage"; // 选择角色
-  static const String joinOrchestraPage = "app://joinOrchestraPage"; // 加入乐团
-  static const String perfectInformationPage =
-      "app://perfectInformationPage"; // 完善资料
-  static const String inviteStudentPage = "app://inviteStudentPage"; // 邀请学院
 
   static Route<dynamic> generateRoute(
     BuildContext context,
@@ -56,6 +31,8 @@ class RoutesUtils {
 
   static Widget _generateView(RouteSettings settings) {
     switch (settings.name) {
+      case rootPage:
+        return LayoutPage();
       case homePage:
         return HomePage();
 

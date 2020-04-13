@@ -19,11 +19,6 @@ abstract class AuthService {
 
   Future<void> signOut();
   Future<bool> isUserLoggedIn();
-  Future<void> updateUserType(String type);
-  Future<void> updateUserInvitationCode(String invitationCode);
+
   Future<void> updateUserNiceName(String name);
-  Future<void> updateUserAddress(String name);
-  Future<void> updateUserDescription(String name);
-  Future<void> updateUserfirstTeachingDate(String name);
-  Future<void> updateUserSex(int sex);
 }

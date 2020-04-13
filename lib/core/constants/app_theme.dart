@@ -1,3 +1,4 @@
+import 'package:chinaculture/core/utils/common/color_utils.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -20,11 +21,13 @@ class AppTheme {
     return themeMode == 'light' ? primaryMaterialTheme : darkMaterialTheme;
   }
 
-  static const Color mainBackgroundColor = Color(0xFFEDF0F2); // appbar背景
+  static const Color mainBackgroundColor = Color(0xFF177cb0); // appbar背景
   static const Color scaffoldBackgroundColor =
-      Color(0xFFEDF0F2); // 整体的scaffold背景颜色
+      Color(0xFFe9f1f6); // 整体的scaffold背景颜色
   static const Color iconColor = Color(0xFFEDF0F2);
   static const Color primaryIconColor = Color(0xFFEDF0F2); // 导航栏按钮颜色
+  static const Color buttonColor = Color(0xFF4b5cc4); // 按钮颜色
+  static const Color darkTextColor = Color(0xFF3d3b4f); // 按钮颜色
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
@@ -47,6 +50,7 @@ class AppTheme {
     iconTheme: iconTheme,
     // primaryIconTheme 导航栏按钮颜色
     primaryIconTheme: iconTheme,
+    buttonColor: buttonColor,
     accentColor: Colors.grey, // 选中颜色
     primaryColor: mainBackgroundColor,
     scaffoldBackgroundColor: scaffoldBackgroundColor,
@@ -69,7 +73,7 @@ class AppTheme {
     fontSize: 36,
     letterSpacing: 0.4,
     height: 0.9,
-    color: darkerText,
+    color: darkTextColor,
   );
 
   static const TextStyle headline = TextStyle(
@@ -78,7 +82,7 @@ class AppTheme {
     fontWeight: FontWeight.bold,
     fontSize: 24,
     letterSpacing: 0.27,
-    color: darkerText,
+    color: darkTextColor,
   );
 
   static const TextStyle title = TextStyle(
@@ -87,7 +91,7 @@ class AppTheme {
     fontWeight: FontWeight.bold,
     fontSize: 16,
     letterSpacing: 0.18,
-    color: darkerText,
+    color: darkTextColor,
   );
 
   static const TextStyle subtitle = TextStyle(
@@ -96,7 +100,7 @@ class AppTheme {
     fontWeight: FontWeight.w400,
     fontSize: 14,
     letterSpacing: -0.04,
-    color: darkText,
+    color: darkTextColor,
   );
 
   static const TextStyle body2 = TextStyle(
@@ -105,7 +109,7 @@ class AppTheme {
     fontWeight: FontWeight.w400,
     fontSize: 14,
     letterSpacing: 0.2,
-    color: darkText,
+    color: darkTextColor,
   );
 
   static const TextStyle body1 = TextStyle(
@@ -114,7 +118,7 @@ class AppTheme {
     fontWeight: FontWeight.w400,
     fontSize: 16,
     letterSpacing: -0.05,
-    color: darkText,
+    color: darkTextColor,
   );
 
   static const TextStyle caption = TextStyle(

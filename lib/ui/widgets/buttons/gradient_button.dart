@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:chinaculture/core/utils/common/ScreenUtil.dart';
 import 'package:chinaculture/core/utils/common/color_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:chinaculture/core/utils/res/resources.dart';
 
 //自定义按钮
@@ -10,6 +9,7 @@ class GradientButton extends StatelessWidget {
     this.width,
     this.height,
     this.style,
+    this.loading = false,
     this.prefixIcon,
     this.onPressed,
     this.borderRadius,
@@ -22,6 +22,7 @@ class GradientButton extends StatelessWidget {
   // 按钮宽高
   final double width;
   final double height;
+  final bool loading;
 
   final String text;
   final TextStyle style;
@@ -40,7 +41,7 @@ class GradientButton extends StatelessWidget {
     LinearGradient _linearGradient; // 渐变色
 
     if (_colors.length == 0) {
-      _backgroundColors = theme.primaryColorDark ?? theme.primaryColor;
+      _backgroundColors = theme.buttonColor;
       _linearGradient = null;
     } else if (_colors.length == 1) {
       _backgroundColors = _colors[0];
@@ -51,42 +52,34 @@ class GradientButton extends StatelessWidget {
     }
 
     return Container(
-        width: this.width ?? ScreenUtil().setSp(180.0),
-        height: this.height ?? ScreenUtil().setHeight(50),
+        width: this.width ?? 110,
+        height: this.height ?? 32,
         decoration: BoxDecoration(
           color: _backgroundColors,
           gradient: _linearGradient,
           borderRadius: borderRadius ?? BorderRadius.circular(25),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.center,
           children: <Widget>[
-            null == this.prefixIcon ? Gaps.empty : this.prefixIcon,
-            // GestureDetector(
-            //   child: Text(
-            //     text,
-            //     style: style ??
-            //         TextStyle(
-            //           color: Colors.white,
-            //           fontSize: ScreenUtil().setSp(24.0),
-            //         ),
-            //   ),
-            //   onTap: () {
-            //     onPressed();
-            //   },
-            // ),
-            RaisedButton(
-              color: Colors.transparent, // 设为透明色
-              elevation: 0, // 正常时阴影隐藏
-              highlightElevation: 0, // 点击时阴影隐藏
-              //点击时，水波动画中水波的颜色
-              splashColor: Colors.black12,
-              //内边距
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                onPressed();
-              },
+            Align(
+              alignment: Alignment(-0.7, 0),
+              child: null == this.prefixIcon ? Gaps.empty : this.prefixIcon,
+            ),
+            Align(
+              alignment: Alignment(-0.7, 0),
+              child: loading
+                  ? SizedBox(
+                      width: 12,
+                      height: 12,
+                      child: CircularProgressIndicator(
+                        backgroundColor: HexToColor("#4B5CC6"),
+                      ),
+                    )
+                  : Gaps.empty,
+            ),
+            GestureDetector(
+              onTap: onPressed,
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
@@ -94,7 +87,7 @@ class GradientButton extends StatelessWidget {
                   style: style ??
                       TextStyle(
                         color: Colors.white,
-                        fontSize: ScreenUtil().setSp(24.0),
+                        fontSize: 14,
                       ),
                 ),
               ),

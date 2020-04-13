@@ -38,8 +38,8 @@ class LoginViewModel extends BaseViewModel with Validators {
     setState(ViewState.Busy);
     try {
       var res = await _authService.signUpWithAuthPassword(mobile, password);
+      _navigationService.pushReplacementNamed(RoutesUtils.homePage);
       setState(ViewState.DataFetched);
-      saveUserInfo(res, mobile);
     } on AuthException {
       setState(ViewState.Error);
     }
@@ -51,7 +51,6 @@ class LoginViewModel extends BaseViewModel with Validators {
     try {
       var res = await _authService.signUpWithAuthcode(mobile, authCode);
       setState(ViewState.DataFetched);
-      saveUserInfo(res, mobile);
     } on AuthException {
       setState(ViewState.Error);
     }
@@ -71,31 +70,6 @@ class LoginViewModel extends BaseViewModel with Validators {
       }
     } on AuthException {
       setState(ViewState.Error);
-    }
-  }
-
-  Future saveUserInfo(dynamic res, String mobile) async {
-    if (res.data["code"] == 0) {
-      User userInfo = User.fromMap(res.data["data"]);
-      LocalStorage.set<String>(LocalStorageKeys.TOKEN_KEY, userInfo.token);
-      LocalStorage.set<String>(LocalStorageKeys.USER_ID, userInfo.id);
-      LocalStorage.set<bool>(LocalStorageKeys.HAS_LOGIN, true);
-
-      _authService.updateCurrentUser(userInfo);
-
-      bool isNewUser = await queryIsNewUser(mobile, userInfo.id);
-      print("是否新用户: $isNewUser");
-      if (isNewUser) {
-        _navigationService.push(RoutesUtils.completematerialPage);
-      } else {
-        if (userInfo.userType == "T") {
-          _navigationService.pushReplacementNamed(RoutesUtils.teacherHomePage);
-        } else {
-          _navigationService.pushReplacementNamed(RoutesUtils.homePage);
-        }
-      }
-    } else {
-      showToast(res.data["msg"]);
     }
   }
 

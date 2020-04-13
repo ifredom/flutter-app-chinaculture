@@ -18,8 +18,6 @@ class InputField extends StatefulWidget {
   final Widget prefixIcon;
   final Widget suffixIcon;
   final bool autofocus;
-  final bool roundBox;
-  final int roundBoxRadius;
   final bool obscureText;
   final TextEditingController controller;
   final Function validator;
@@ -45,8 +43,6 @@ class InputField extends StatefulWidget {
     this.getVCode,
     this.autofocus = false,
     this.obscureText = false,
-    this.roundBox = true, // 圆角边框风格 | 一条底线风格
-    this.roundBoxRadius, // 圆角边框风格 | 一条底线风格
     this.controller,
     this.validator,
     this.onChanged,
@@ -133,25 +129,12 @@ class _CustomTextFieldState extends State<InputField> {
       decoration: InputDecoration(
         isDense: true,
         // labelText: "用户名",
-        // contentPadding: EdgeInsets.only(
-        //   top: ScreenUtil().setSp(5),
-        //   bottom: ScreenUtil().setSp(5),
-        // ),
         border: InputBorder.none,
-        fillColor: HexToColor("#482C70"),
-        // 如果filled=true，则背景为fillColor，无需包在Container控件中
-        // filled: false,
         // errorText: 'error',
         //计算数字
         counterText: "",
         hintText: widget.hintText,
         hintStyle: widget.hintStyle ?? null,
-        // prefixIcon: widget.prefixIcon ?? null,
-        // prefixStyle: TextStyle(
-        //   fontSize: ScreenUtil().setSp(30),
-        //   height: ScreenUtil().setSp(30),
-        // ),
-        // suffixIcon: widget.suffixIcon ?? null,
       ),
     );
   }
@@ -163,24 +146,14 @@ class _CustomTextFieldState extends State<InputField> {
   }
 
   Widget _buildTextfieldWrapper({Widget child}) {
-    Decoration _decoration = widget.roundBox
-        ? BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: widget.borderColor ?? Color.fromRGBO(217, 217, 217, 1),
-            ),
-            borderRadius: widget.roundBoxRadius == 0
-                ? BorderRadius.zero
-                : BorderRadius.all(
-                    Radius.circular(widget.roundBoxRadius ?? 32)),
-          )
-        : UnderlineTabIndicator(
-            borderSide: BorderSide(width: 1.0, color: Color(0xFFeeeeee)),
-          );
+    /// 定制下划线
+    Decoration _decoration = UnderlineTabIndicator(
+      borderSide: BorderSide(width: 0.5, color: HexToColor("#333333")),
+    );
 
-    EdgeInsetsGeometry _padding = widget.padding ??
-        EdgeInsets.fromLTRB(
-            ScreenUtil().setWidth(32), 0, ScreenUtil().setWidth(32), 0);
+    /// 一点间距
+    EdgeInsetsGeometry _padding =
+        widget.padding ?? EdgeInsets.only(left: 8, right: 8);
 
     return Container(
       padding: _padding,

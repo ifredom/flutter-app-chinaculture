@@ -110,7 +110,6 @@ class _LoginPhonePageState extends State<LoginPhonePage> {
                                   focusNode: _phoneFocus,
                                   nextFocusNode: _vCodeFocus,
                                   autofocus: false,
-                                  roundBox: true,
                                   hintText: "请输入手机号",
                                   keyboardType: TextInputType.phone,
                                   controller: phoneController,
